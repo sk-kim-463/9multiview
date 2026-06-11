@@ -1,187 +1,361 @@
 <!DOCTYPE html>
+
 <html lang="ko">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Youtube Multiview_9</title>
 
+
+
     <style>
+
         body {
+
             display: flex;
+
             flex-wrap: wrap;
+
             justify-content: space-around;
-            margin: 0;
-            padding: 10px;
-            background-color: #f5f5f5;
+
         }
+
+
 
         .video-container {
+
             position: relative;
+
             padding-bottom: 56.25%;
+
             height: 0;
+
         }
+
+
 
         .video-container iframe {
+
             position: absolute;
+
             top: 0;
+
             left: 0;
+
             width: 100%;
+
             height: 100%;
+
         }
+
+
 
         .video-wrapper {
+
             width: calc(33.33% - 10px);
+
             margin: 3px;
+
             box-sizing: border-box;
+
             position: relative;
+
         }
 
-        .text-box {
-            position: absolute;
-            bottom: 0;
-            left: 50%;  /* Center the text box horizontally */
-            transform: translateX(-50%);  /* Center the text box horizontally */
-            width: 50%; /* 글자가 잘리지 않도록 40%에서 50%로 살짝 확장 */
-            padding: 2px;
-            box-sizing: border-box;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: black;
-            font-weight: bold;
-            font-size: 12px;
-            z-index: 10;
-        }
+
+
+.text-box {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 50%;  /* Center the text box horizontally */
+
+    transform: translateX(-50%);  /* Center the text box horizontally */
+
+    width: 40%;
+
+    padding: 1px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    background-color: rgba(255, 255, 255, 0.9);
+
+    color: black;
+
+    font-weight: bold;
+
+}
+
+
 
         @media (max-width: 768px) {
+
             .video-wrapper {
-                width: calc(50% - 10px);
+
+                width: calc(50% - 20x`0px);
+
             }
+
         }
+
     </style>
 
+
+
 </head>
+
 <body>
 
+
+
 <script>
+
     const apiKey = 'AIzaSyAAlz4Qbvkh5rvr-Ffwdt1RbsaqC4HqCVw';
-    
-    // 9개 채널의 ID, 출력 엘리먼트, 채널명을 일괄 관리합니다.
-    const videoConfig = {
-        'bRBtOPYU414': { elementId: 'realTimeViewers1', name: '한국경제TV' },
-        'lb1oB2feqkQ': { elementId: 'realTimeViewers2', name: 'MTN' },
-        'yhpbioCP6nA': { elementId: 'realTimeViewers3', name: '연합뉴스경제' },
-        's9xL1DpBsfQ': { elementId: 'realTimeViewers4', name: '매일경제TV' },
-        '5cFoz90FUMk': { elementId: 'realTimeViewers5', name: '이데일리TV' },
-        'w05Ejc0iOVI': { elementId: 'realTimeViewers6', name: '토마토TV' },
-        'FJfwehhzIhw': { elementId: 'realTimeViewers7', name: 'YTN' },
-        '6QZ_qc75ihU': { elementId: 'realTimeViewers8', name: '연합뉴스' },
-        'iEpJwprxDdk': { elementId: 'realTimeViewers9', name: 'Bloomberg' }
-    };
 
-    const videoIds = Object.keys(videoConfig);
+    const videoId1 = 'bRBtOPYU414';
 
-    function fetchAllRealTimeViewers() {
-        // 9개의 유튜브 비디오 ID를 쉼표(,)로 결합하여 하나의 가닥으로 요청합니다.
-        const concatenatedIds = videoIds.join(',');
-        
-        fetch(`https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=${concatenatedIds}&key=${apiKey}`)
-            .then(response => response.json())
-            .then(data => {
-                if (!data.items) return;
+    const videoId2 = 'lb1oB2feqkQ';
 
-                // 응답 데이터에서 ID를 매칭하여 해당 텍스트 박스만 동적으로 업데이트합니다.
-                data.items.forEach(item => {
-                    const videoId = item.id;
-                    const config = videoConfig[videoId];
-                    
-                    if (config && item.liveStreamingDetails && item.liveStreamingDetails.concurrentViewers) {
-                        const realTimeViewers = item.liveStreamingDetails.concurrentViewers;
-                        const formattedViewers = addCommasToNumber(realTimeViewers);
-                        document.getElementById(config.elementId).innerText = `${config.name}: ${formattedViewers}명`;
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
+    const videoId3 = 'yhpbioCP6nA';
 
-    function addCommasToNumber(number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+    const videoId4 = 's9xL1DpBsfQ';
 
-    // 웹페이지 초기 로드 시 1회 호출
-    fetchAllRealTimeViewers();
+    const videoId5 = '5cFoz90FUMk';
 
-    // 30초마다 1회 일괄 갱신 (기존 대비 API 소모량 9분의 1로 절감)
+    const videoId6 = 'w05Ejc0iOVI';
+
+    const videoId7 = 'FJfwehhzIhw';
+
+    const videoId8 = '6QZ_qc75ihU';
+
+    const videoId9 = 'iEpJwprxDdk';
+
+
+
+
+
+    function fetchRealTimeViewers(videoId, elementId, videoName) {
+
+    fetch(`https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=${videoId}&key=${apiKey}`)
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            const realTimeViewers = data.items[0].liveStreamingDetails.concurrentViewers;
+
+            const formattedViewers = addCommasToNumber(realTimeViewers);
+
+            document.getElementById(elementId).innerText = `${videoName}: ${formattedViewers}명`;
+
+        })
+
+        .catch(error => console.error('Error fetching data:', error));
+
+}
+
+
+
+function addCommasToNumber(number) {
+
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+}
+
+
+
+    // Fetch real-time viewers count initially
+
+    fetchRealTimeViewers(videoId1, 'realTimeViewers1', '한국경제TV');
+
+    fetchRealTimeViewers(videoId2, 'realTimeViewers2', 'MTN');
+
+    fetchRealTimeViewers(videoId3, 'realTimeViewers3', '연합뉴스경제');
+
+    fetchRealTimeViewers(videoId4, 'realTimeViewers4', '매일경제TV');
+
+    fetchRealTimeViewers(videoId5, 'realTimeViewers5', '이데일리TV');
+
+    fetchRealTimeViewers(videoId6, 'realTimeViewers6', '토마토TV');
+
+    fetchRealTimeViewers(videoId7, 'realTimeViewers7', 'YTN');
+
+    fetchRealTimeViewers(videoId8, 'realTimeViewers8', '연합뉴스');
+
+    fetchRealTimeViewers(videoId9, 'realTimeViewers9', 'Bloomberg');
+
+
+
+    // Fetch real-time viewers count every 30 seconds (adjust as needed)
+
     setInterval(() => {
-        fetchAllRealTimeViewers();
+
+        fetchRealTimeViewers(videoId1, 'realTimeViewers1', '한국경제TV');
+
+        fetchRealTimeViewers(videoId2, 'realTimeViewers2', 'MTN');
+
+        fetchRealTimeViewers(videoId3, 'realTimeViewers3', '연합뉴스경제');
+
+        fetchRealTimeViewers(videoId4, 'realTimeViewers4', '매일경제TV');
+
+        fetchRealTimeViewers(videoId5, 'realTimeViewers5', '이데일리TV');
+
+        fetchRealTimeViewers(videoId6, 'realTimeViewers6', '토마토TV');
+
+        fetchRealTimeViewers(videoId7, 'realTimeViewers7', 'YTN');
+
+        fetchRealTimeViewers(videoId8, 'realTimeViewers8', '연합뉴스');
+
+        fetchRealTimeViewers(videoId9, 'realTimeViewers9', 'Bloomberg');
+
     }, 30000);
+
 </script>
 
-<div class="video-wrapper">
-    <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/bRBtOPYU414?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="text-box" id="realTimeViewers1">로딩 중...</div>
-</div>
+
+
+<!-- YouTube Videos -->
 
 <div class="video-wrapper">
+
     <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/lb1oB2feqkQ?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
+        <iframe width="100%" height="100" src="https://www.youtube.com/embed/bRBtOPYU414?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
     </div>
-    <div class="text-box" id="realTimeViewers2">로딩 중...</div>
+
+    <div class="text-box" id="realTimeViewers1"></div>
+
 </div>
 
-<div class="video-wrapper">
-    <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/yhpbioCP6nA?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="text-box" id="realTimeViewers3">로딩 중...</div>
-</div>
+
 
 <div class="video-wrapper">
+
     <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/s9xL1DpBsfQ?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
+        <iframe width="100%" height="100" src="https://www.youtube.com/embed/lb1oB2feqkQ?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
     </div>
-    <div class="text-box" id="realTimeViewers4">로딩 중...</div>
+
+    <div class="text-box" id="realTimeViewers2"></div>
+
 </div>
 
-<div class="video-wrapper">
-    <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5cFoz90FUMk?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="text-box" id="realTimeViewers5">로딩 중...</div>
-</div>
+
 
 <div class="video-wrapper">
+
     <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/w05Ejc0iOVI?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
+        <iframe width="100%" height="100" src="https://www.youtube.com/embed/yhpbioCP6nA?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
     </div>
-    <div class="text-box" id="realTimeViewers6">로딩 중...</div>
+
+    <div class="text-box" id="realTimeViewers3"></div>
+
 </div>
 
-<div class="video-wrapper">
-    <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/FJfwehhzIhw?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="text-box" id="realTimeViewers7">로딩 중...</div>
-</div>
+
 
 <div class="video-wrapper">
+
     <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/6QZ_qc75ihU?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
+        <iframe width="100%" height="100" src="https://www.youtube.com/embed/s9xL1DpBsfQ?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
     </div>
-    <div class="text-box" id="realTimeViewers8">로딩 중...</div>
+
+    <div class="text-box" id="realTimeViewers4"></div>
+
 </div>
 
+
+
 <div class="video-wrapper">
+
     <div class="video-container">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
+        <iframe width="100%" height="100" src="https://www.youtube.com/embed/5cFoz90FUMk?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
     </div>
-    <div class="text-box" id="realTimeViewers9">로딩 중...</div>
+
+    <div class="text-box" id="realTimeViewers5"></div>
+
 </div>
+
+
+
+<div class="video-wrapper">
+
+    <div class="video-container">
+
+        <iframe width="100%" height="100" src="https://www.youtube.com/embed/w05Ejc0iOVI?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
+    </div>
+
+    <div class="text-box" id="realTimeViewers6"></div>
+
+</div>
+
+
+
+<div class="video-wrapper">
+
+    <div class="video-container">
+
+        <iframe width="100%" height="100" src="https://play.afreecatv.com/ytnlive/embed?autoPlay=true&mutePlay=true" frameborder="0" allowfullscreen></iframe>
+
+    </div>
+
+    <div class="text-box" id="realTimeViewers7"></div>
+
+</div>
+
+
+
+<div class="video-wrapper">
+
+    <div class="video-container">
+
+        <iframe width="100%" height="100" src="https://play.afreecatv.com/yonhapnews/embed?embed?autoPlay=true&mutePlay=true" frameborder="0" allowfullscreen></iframe>
+
+    </div>
+
+    <div class="text-box" id="realTimeViewers8"></div>
+
+</div>
+
+
+
+<div class="video-wrapper">
+
+    <div class="video-container">
+
+      <iframe width="100%" height="100" src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+
+    </div>
+
+    <div class="text-box" id="realTimeViewers9"></div>
+
+</div>
+
+
 
 </body>
+
 </html>
